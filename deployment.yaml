@@ -1,0 +1,41 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: google-cloud-dns-dynamic
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: google-cloud-dns-dynamic
+    spec:
+      containers:
+      - image: jonaseck/rpi-google-cloud-dns-dynamic
+        name: google-cloud-dns-dynamic
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: "/credentials/google-application-credentials.json"
+        - name: PROJECT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: google-cloud-dns-dynamic
+              key: project_id
+        - name: DNS_ZONE_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: google-cloud-dns-dynamic
+              key: dns_zone_name
+        - name: DNS_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: google-cloud-dns-dynamic
+              key: dns_name
+        volumeMounts:
+        - name: google-application-credentials
+          mountPath: "/credentials"
+          readOnly: true
+      volumes:
+      - name: google-application-credentials
+        secret:
+          secretName: google-application-credentials

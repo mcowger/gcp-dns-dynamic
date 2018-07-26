@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: google-cloud-dns-dynamic
+data:
+  project_id: kubernetes-rocks
+  dns_zone_name: kubernetes-rocks
+  dns_name: pi.kubernetes.rocks.

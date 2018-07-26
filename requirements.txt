@@ -1,0 +1,2 @@
+google-cloud-dns==0.26.0
+ipgetter==0.6
